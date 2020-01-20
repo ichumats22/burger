@@ -9,7 +9,7 @@ var burger = require('../models/burger.js');
 router.get('/', function(req, res) {
   burger.all(function(data) {
     var hbsObject = {
-      burger: data
+      burgers: data
     };
     console.log(hbsObject);
     res.render('index', hbsObject);
@@ -17,29 +17,30 @@ router.get('/', function(req, res) {
 });
 
 router.post('/api/burgers', function(req, res) {
-  burger.create(['burger_name'], [req.body.name], function(result) {
-    res.json({ burger_name: result.burger_name });
+  burger.create([
+    'burger_name', 'devoured'
+  ], [
+    req.body.burger_name, req.body.devoured
+  ], function(result) {
+    res.json({ id: result.insertId });
   });
 });
 
-router.put('/api/cats/:id', function(req, res) {
-  var condition = `id = ${req.params.id}`;
+router.put('/api/burgers/:id', function(req, res) {
+  var condition = "id = " + req.params.id;
 
-  console.log('condition: ', condition);
+  console.log(`condition : ${condition}`);
 
-  burger.update(
-    {
+  burger.update({
       devoured: req.body.devoured
-    },
-    condition,
-    function(result) {
-      if(result.changedRows === 0) {
-        return res.status(404).end();
-      }
-      res.status(200).end();
+  }, condition, function(result) {
+    if(result.changedRows === 0) {
+      return res.status(404).end();
+    } else {
+    res.status(200).end();
     }
-  );
-});
+  });
+});  
 
 //Export router for server.js
 module.exports = router;

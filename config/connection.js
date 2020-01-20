@@ -1,5 +1,5 @@
+//Set up MySQL connection
 var mysql = require('mysql');
-require('dotenv').config();
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -9,12 +9,15 @@ var connection = mysql.createConnection({
   database: 'burgers_db'
 });
 
+
+// Make connection
 connection.connect(function(err) {
   if (err) {
-    console.error(`Error conecting: ${err.stack}`);
+    console.error(`Error connecting: ${err.stack}`);
     return;
   }
   console.log(`Connected as ID: ${connection.threadId}`);
 });
 
+//Export connection four our ORM to use
 module.exports = connection;
