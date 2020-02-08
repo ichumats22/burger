@@ -1,12 +1,20 @@
 var express = require('express');
+var request = require('request')
+var app = express();
 require('dotenv').config();
 
-var PORT = process.env.PORT || 8080;
-
-var app = express();
+var PORT = process.env.PORT || 3000;
+var corsOptions = {
+  origin: process.env.ORIGIN_URL || "http://localhost",
+  optionsSuccessStatus: 200
+};
 
 // Serve static content for the app from the "public" directory in the application directory
 app.use(express.static('public'));
+
+app.use("/cors/*", function(req, res) {
+  req.pipe(request(req.params[0])).pipe(res);
+})
 
 // Parse application body as JSON
 app.use(express.urlencoded({ extended: true }));
