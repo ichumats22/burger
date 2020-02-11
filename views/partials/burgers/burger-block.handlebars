@@ -1,5 +1,16 @@
 <li>
 	<h3>{{burger_name}}</h3>
-	{{#if devour}}<button id="devour" data-id='{{id}}' data-newstatus='{{devour}}' type="button" class="btn btn-warning">DEVOUR</button>{{else}}<button id="delete" data-id='{{id}}' data-newstatus='{{devour}}' type="button" class="btn btn-danger" >DELETE</button>{{/if}}
-
+	{{#if devour}}
+		<form class='devour-form button-size'>
+			<input type='hidden' class='burger_id' type='text' value={{this.id}}>
+			<br>
+			<button type='submit' class='btn btn-warning'>DEVOUR!</button>
+		</form>
+	{{else}}
+		<form class='delete-form button-size'>
+			<input type='hidden' class='burger_id' type='text' value={{this.id}}>
+			<br>
+			<button type='submit' class='btn btn-danger'>DELETE!</button>
+		</form>
+	{{/if}}
 </li>
