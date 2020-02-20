@@ -22,19 +22,6 @@ function objToSql(ob) {
 
 //Object for all SQL statement function
 var orm = {
-  createDatabase: function() {
-    var queryString= 'CREATE TABLE burgers (' + 
-        'id int NOT NULL AUTO_INCREMENT,' +
-        'burger_name varchar(255) NOT NULL,' +
-        'devoured BOOL DEFAULT false,' +
-        'PRIMARY KEY (id))'
-    connection.query(queryString, function(err, res) {
-      if (err) {
-        throw err;
-      }
-      console.log('Table is ready!' + res);
-    })
-  },
   all: function(cb) {
     var queryString = 'SELECT * FROM burgers;';
     connection.query(queryString, function(err, result) {
