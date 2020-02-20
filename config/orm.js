@@ -1,3 +1,4 @@
+var env = process.env.NODE_ENV || 'development';
 //Import MySQL connection
 var connection = require('./connection.js');
 
@@ -5,7 +6,7 @@ var connection = require('./connection.js');
 function printQuestionMarks(num) {
   var arr = [];
   for (var i = 0; i < num; i++) {
-    arr.push("?");
+    arr.push('?');
   }
   return arr.toString();
 };
@@ -14,15 +15,28 @@ function printQuestionMarks(num) {
 function objToSql(ob) {
   var arr = [];
   for (var key in ob) {
-    arr.push(key + "=" + ob[key]);
+    arr.push(key + '=' + ob[key]);
   }
   return arr.toString();
 };
 
 //Object for all SQL statement function
 var orm = {
+  createDatabase: function() {
+    var queryString= 'CREATE TABLE burgers (' + 
+        'id int NOT NULL AUTO_INCREMENT,' +
+        'burger_name varchar(255) NOT NULL,' +
+        'devoured BOOL DEFAULT false,' +
+        'PRIMARY KEY (id))'
+    connection.query(queryString, function(err, res) {
+      if (err) {
+        throw err;
+      }
+      console.log('Table is ready!' + res);
+    })
+  },
   all: function(cb) {
-    var queryString = 'SELECT * FROM ' + table + ';';
+    var queryString = 'SELECT * FROM burgers;';
     connection.query(queryString, function(err, result) {
       if (err) {
         throw err;
@@ -32,14 +46,14 @@ var orm = {
   },
 
   create: function(cols, vals, cb) {
-    var queryString = "INSERT INTO " + table;
+    var queryString = 'INSERT INTO burgers';
 
-    queryString += " (";
+    queryString += ' (';
     queryString += cols.toString();
-    queryString += ") ";
-    queryString += "VALUES (";
+    queryString += ') ';
+    queryString += 'VALUES (';
     queryString += printQuestionMarks(vals.length);
-    queryString += ") ";
+    queryString += ') ';
 
     console.log(queryString);
     
@@ -52,11 +66,11 @@ var orm = {
   }, 
 
   update: function (objColVals, condition, cb) {
-    var queryString = "UPDATE " + table;
+    var queryString = 'UPDATE burgers';
 
-    queryString += " SET ";
+    queryString += ' SET ';
     queryString += objToSql(objColVals);
-    queryString += " WHERE ";
+    queryString += ' WHERE ';
     queryString += condition;
 
     console.log(queryString);
@@ -70,8 +84,8 @@ var orm = {
   },
 
   delete: function(condition, cb) {
-    var queryString = "DELETE FROM " + table;
-    queryString += " WHERE ";
+    var queryString = 'DELETE FROM burgers';
+    queryString += ' WHERE ';
     queryString += condition;
 
     connection.query(queryString, function(err, result) {
