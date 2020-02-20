@@ -3,13 +3,13 @@ var orm = require('../config/orm.js');
 
 var burger = {
   all: function(cb) {
-    orm.all('burgers', function(res) {
+    orm.all(function(res) {
       cb(res);
     });
   },
 
   create: function(name, cb) {
-    orm.create('burgers', [
+    orm.create([
       'burger_name', 'devoured'
     ], [
       name, false
@@ -18,14 +18,14 @@ var burger = {
 
   update: function(id, cb) {
     var condition = 'id=' + id;
-    orm.update('burgers', { 
+    orm.update({ 
       devoured: true
     }, condition, cb);
   },
 
   delete: function(id, cb) {
     var condition = 'id=' + id;
-    orm.delete('burgers', condition, cb);
+    orm.delete(condition, cb);
   }
 };
 
