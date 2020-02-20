@@ -1,22 +1,13 @@
 require('dotenv').config();
-module.exports = {
-  'development': {
-    'username': 'root',
-    'password': process.env.password,
-    'database': 'burgers_db',
-    'host': 'localhost',
-    'dialect': 'mysql'
-  },
-  'test': {
-    'username': 'root',
-    'password': process.env.password,
-    'database': 'burgers_db',
-    'host': 'localhost',
-    'dialect': 'mysql',
-    'logging': false
-  },
-  'production': {
-    'use_env_variable': 'JAWSDB_URL',
-    'dialect': 'mysql'
+var mysql = require('mysql');
+var connection = mysql.createConnection(process.env.JAWSDB_URL)
+
+connection.connect(function(err) {
+  if (err) {
+    console.log(`error connecting: ${err.stack}`);
+    return;
   }
-}
+  console.log(`connected as id: ${connection.threadId}`)
+})
+
+module.exports = connection;
