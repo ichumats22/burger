@@ -1,4 +1,3 @@
-var env = process.env.NODE_ENV || 'development';
 //Import MySQL connection
 var connection = require('./connection.js');
 
