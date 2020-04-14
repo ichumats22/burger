@@ -8,5 +8,5 @@ A burger restaurant app following the MVC design pattern created with MySQL, Nod
   * MySQL & ORM- data storage/ queries
   * Handlebars -  HTML 
 
-[See the Deployed Version](https://git.heroku.com/ivc-burger.git "Burger Time!")
+[See the Deployed Version](https://ivc-burger.herokuapp.com/)
 
